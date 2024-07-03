@@ -104,11 +104,14 @@ function Change() {
 
   // Обработчик создания заявки
   const handleCreateRequest = (event) => {
-    event.preventDefault();
-    toast.success("Заявка создана! Пожалуйста, следуйте далее для завершения процесса обмена.");
+    event.preventDefault(); 
+    toast.success(
+      "Заявка создана! Пожалуйста, следуйте далее для завершения процесса обмена."
+    );
+   
     setTimeout(() => {
-      navigate(REQUEST_ROUTE); 
-    }, 1000);
+      window.location.href = /nft-rental-ton${REQUEST_ROUTE}; 
+    }, 1000); 
   };
 
   return (
