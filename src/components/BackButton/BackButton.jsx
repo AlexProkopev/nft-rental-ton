@@ -13,7 +13,7 @@ const BackButton = () => {
     <div>
       
       <Button variant="outlined" color="primary" onClick={handleBackClick} className='back-btn' sx={{
-        marginBottom: 2, // Отступ сверху кнопки
+        marginBottom: 2, 
         width: '100%', 
         '@media (min-width: 600px)': {
           width: 'auto', // При ширине экрана более 600px вернуть стандартную ширину
