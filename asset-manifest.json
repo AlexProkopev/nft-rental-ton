@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/nft-rental-ton/static/css/main.4be528f3.css",
+    "main.js": "/nft-rental-ton/static/js/main.eaaf2b36.js",
+    "static/js/453.046926e0.chunk.js": "/nft-rental-ton/static/js/453.046926e0.chunk.js",
+    "index.html": "/nft-rental-ton/index.html",
+    "main.4be528f3.css.map": "/nft-rental-ton/static/css/main.4be528f3.css.map",
+    "main.eaaf2b36.js.map": "/nft-rental-ton/static/js/main.eaaf2b36.js.map",
+    "453.046926e0.chunk.js.map": "/nft-rental-ton/static/js/453.046926e0.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4be528f3.css",
+    "static/js/main.eaaf2b36.js"
+  ]
+}
