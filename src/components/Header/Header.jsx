@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Header.css';
-import { CABINET_ROUTE, CHANGE_ROUTE, CRYPTOTABLE_ROUTE, HOME_ROUTE, PAPER_ROUTE, ROAD_ROUTE } from '../routes/routes';
+import { CABINET_ROUTE, CHANGE_ROUTE, CRYPTOTABLE_ROUTE, REQUEST_ROUTE, ROAD_ROUTE } from '../routes/routes';
 import Logo from '../Logo/Logo';
 
 const Header = () => {
@@ -29,7 +29,7 @@ const Header = () => {
 
   return (
     <header className='header-container'>
-      <NavLink to={HOME_ROUTE} className='logo-link'>
+      <NavLink to={CHANGE_ROUTE} className='logo-link'>
         <Logo />
       </NavLink>
       <button className={`burger-menu ${isMenuOpen ? 'open' : ''}`} onClick={toggleMenu}>
@@ -61,7 +61,7 @@ const Header = () => {
           AML правила
         </NavLink>
         <NavLink 
-          to={PAPER_ROUTE} 
+          to={REQUEST_ROUTE} 
           className={({ isActive }) => isActive ? 'nav-link active-link' : 'nav-link'}
           onClick={closeMenu} // Закрытие меню при выборе страницы
         >

@@ -10,7 +10,7 @@ const BackButton = () => {
   };
 
   return (
-    <div>
+   
       
       <Button variant="outlined" color="primary" onClick={handleBackClick} className='back-btn' sx={{
         marginBottom: 2, 
@@ -21,7 +21,7 @@ const BackButton = () => {
       }}>
         Назад
       </Button>
-    </div>
+   
   );
 };
 

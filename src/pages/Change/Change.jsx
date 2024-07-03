@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Change.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { REQUEST_ROUTE } from "../../components/routes/routes";
 import ChangeIcon from "./ChangeIcon/ChangeIcon";
 import { reserves } from "../../array/coinsArray";
 import ReviewsList from "../../components/Reviews/Reviews";
-import { toast, ToastContainer } from 'react-toastify'; // Импортируем ToastContainer и toast
-import 'react-toastify/dist/ReactToastify.css'; // Импортируем стили
+import { toast, ToastContainer } from "react-toastify"; // Импортируем ToastContainer и toast
+import "react-toastify/dist/ReactToastify.css"; // Импортируем стили
 
 function Change() {
   const [coins, setCoins] = useState([]);
@@ -16,11 +16,12 @@ function Change() {
   const [priceToShow1, setPriceToShow1] = useState(null); // Для списка 1
   const [priceToShow2, setPriceToShow2] = useState(null); // Для списка 2
   const [exchangeRate, setExchangeRate] = useState(null); // Для хранения курса обмена
-  console.log('exchangeRate: ', exchangeRate);
+  const navigate = useNavigate();
+  console.log("exchangeRate: ", exchangeRate);
 
   useEffect(() => {
     // Загружаем выбранные монеты из localStorage при монтировании компонента
-    const storedValues = JSON.parse(localStorage.getItem('selectedCoins'));
+    const storedValues = JSON.parse(localStorage.getItem("selectedCoins"));
     if (storedValues) {
       setSelectedCoin1(storedValues[0] || null);
       setSelectedCoin2(storedValues[1] || null);
@@ -46,7 +47,10 @@ function Change() {
 
   useEffect(() => {
     // Сохраняем выбранные монеты в localStorage при их изменении
-    localStorage.setItem('selectedCoins', JSON.stringify([selectedCoin1, selectedCoin2]));
+    localStorage.setItem(
+      "selectedCoins",
+      JSON.stringify([selectedCoin1, selectedCoin2])
+    );
     if (selectedCoin1 && selectedCoin2) {
       fetchExchangeRate(selectedCoin1.id, selectedCoin2.id);
     }
@@ -77,46 +81,49 @@ function Change() {
       .get(`https://api.coingecko.com/api/v3/simple/price`, {
         params: {
           ids: `${coinId1},${coinId2}`,
-          vs_currencies: 'usd',
+          vs_currencies: "usd",
         },
       })
-      .then(response => {
-        const rate1to2 = response.data[coinId2]?.usd / response.data[coinId1]?.usd;
-        setExchangeRate(rate1to2 ? rate1to2.toFixed(2) : 'N/A');
+      .then((response) => {
+        const rate1to2 =
+          response.data[coinId2]?.usd / response.data[coinId1]?.usd;
+        setExchangeRate(rate1to2 ? rate1to2.toFixed(2) : "N/A");
       })
-      .catch(error => {
-        console.error('Error fetching exchange rate:', error);
-        setExchangeRate('Error');
+      .catch((error) => {
+        console.error("Error fetching exchange rate:", error);
+        setExchangeRate("Error");
       });
   };
 
   const getReserve = (name) => {
-    const reserve = reserves.find(r => r.name.toLowerCase() === name.toLowerCase());
-    return reserve ? reserve.reserve : 'No Reserve';
+    const reserve = reserves.find(
+      (r) => r.name.toLowerCase() === name.toLowerCase()
+    );
+    return reserve ? reserve.reserve : "No Reserve";
   };
 
   // Обработчик создания заявки
   const handleCreateRequest = (event) => {
-    event.preventDefault(); // Предотвращаем переход по ссылке до выполнения логики
-    toast.success('Заявка создана! Пожалуйста, следуйте далее для завершения процесса обмена.'); // Уведомление о создании заявки
-    // Используем `setTimeout` для отложенного перехода
+    event.preventDefault();
+    toast.success("Заявка создана! Пожалуйста, следуйте далее для завершения процесса обмена.");
     setTimeout(() => {
-      window.location.href = REQUEST_ROUTE; // Переход на страницу заявки
-    }, 1000); // Задержка в 1 секунду для показа уведомления
+      navigate(REQUEST_ROUTE); 
+    }, 1000);
   };
 
   return (
     <div className="container">
       <div className="lists-container">
         <div>
-        
           <p className="text-change">Отдаете</p>
           <ul className="listFirst">
             {coins.map((coin) => (
               <li key={coin.id} onClick={() => handleCoinClick(coin, 1)}>
                 <button
                   type="button"
-                  className={`coin-button ${selectedCoin1?.id === coin.id ? 'selected' : ''}`}
+                  className={`coin-button ${
+                    selectedCoin1?.id === coin.id ? "selected" : ""
+                  }`}
                   disabled={selectedCoin2 && selectedCoin2.id === coin.id} // Деактивируем кнопку если коин уже выбран во втором списке
                 >
                   <img
@@ -127,9 +134,7 @@ function Change() {
                   />
                 </button>
                 {priceToShow1 === coin.id && (
-                  <div className="priceInfo">
-                    {coin.current_price} USD
-                  </div>
+                  <div className="priceInfo">{coin.current_price} USD</div>
                 )}
                 <div className="reserveInfo">
                   <span>{getReserve(coin.name)}</span>
@@ -140,13 +145,15 @@ function Change() {
         </div>
         <ChangeIcon />
         <div>
-          <p  className="text-change">Получаете</p>
+          <p className="text-change">Получаете</p>
           <ul className="listSecond">
             {coins.map((coin) => (
               <li key={coin.id} onClick={() => handleCoinClick(coin, 2)}>
                 <button
                   type="button"
-                  className={`coin-button ${selectedCoin2?.id === coin.id ? 'selected' : ''}`}
+                  className={`coin-button ${
+                    selectedCoin2?.id === coin.id ? "selected" : ""
+                  }`}
                   disabled={selectedCoin1 && selectedCoin1.id === coin.id} // Деактивируем кнопку если коин уже выбран в первом списке
                 >
                   <img
@@ -157,9 +164,7 @@ function Change() {
                   />
                 </button>
                 {priceToShow2 === coin.id && (
-                  <div className="priceInfo">
-                    {coin.current_price} USD
-                  </div>
+                  <div className="priceInfo">{coin.current_price} USD</div>
                 )}
                 <div className="reserveInfo">
                   <span>{getReserve(coin.name)}</span>
@@ -169,7 +174,6 @@ function Change() {
           </ul>
         </div>
       </div>
-
       <Link
         to={REQUEST_ROUTE}
         className="create-btn"
@@ -177,12 +181,11 @@ function Change() {
       >
         Создать заявку
       </Link>
-
       <div className="reviews-container">
         <ReviewsList />
       </div>
-
-      <ToastContainer /> {/* Добавляем компонент ToastContainer для отображения уведомлений */}
+      <ToastContainer />{" "}
+      {/* Добавляем компонент ToastContainer для отображения уведомлений */}
     </div>
   );
 }
